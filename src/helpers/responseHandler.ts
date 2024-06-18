@@ -14,7 +14,7 @@ export const responseWithData = (
   data: any,
   message = "",
   status = responseCode.OK,
-  token = null
+  token: string | null = null
 ) => {
   return res.status(status || 200).send({
     result: true,

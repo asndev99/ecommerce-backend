@@ -1,7 +1,6 @@
 import { Prisma, PrismaClient, User } from "@prisma/client";
 import { IUserRepository } from "./IUserRepository";
-
-const prisma = new PrismaClient();
+import { prismaClient } from "../server";
 
 interface CreateUserInput {
   name: string;
@@ -11,7 +10,7 @@ interface CreateUserInput {
 
 export class UserRepository implements IUserRepository {
   async createUser(user: CreateUserInput): Promise<User> {
-    return prisma.user.create({
+    return prismaClient.user.create({
       data: user,
     });
   }
@@ -20,7 +19,7 @@ export class UserRepository implements IUserRepository {
     email: string,
     select: Prisma.UserSelect
   ): Promise<User | null> {
-    return prisma.user.findFirst({
+    return prismaClient.user.findFirst({
       where: {
         email,
       },

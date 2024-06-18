@@ -4,7 +4,7 @@ import { hashSync } from "bcrypt";
 import { User } from "@prisma/client";
 import { ConflictError, UnauthorizedError } from "../helpers/customError";
 import { isNil } from "lodash";
-import { comparePassword } from "../helpers/commonHelpers";
+import { comparePassword, generateToken } from "../helpers/commonHelpers";
 
 export class UserService {
   private userRepository: UserRepository;
@@ -43,6 +43,7 @@ export class UserService {
     if (user?.password && !comparePassword(password, user.password)) {
       throw new UnauthorizedError("Incorrect email or password");
     }
-    return user;
+    const token = generateToken({ userId: user.id });
+    return { user, token };
   }
 }
