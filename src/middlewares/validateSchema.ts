@@ -28,8 +28,9 @@ const validateSchema = (schema: ZodSchema<any>) => {
           responseCode.BAD_REQUEST,
           errors
         );
+      } else {
+        next(err);
       }
-      next(err);
     }
   };
 };

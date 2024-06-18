@@ -9,10 +9,11 @@ export class UserController {
 
   async userSignup(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.userService.userSignup(req);
+      const data = await this.userService.userSignup(req);
+      const user = UserSerializers.fromPlainObject(data);
       return responseHandler.responseWithData(
         res,
-        user,
+        user.excludePassword(),
         "Account created successfully"
       );
     } catch (error) {
