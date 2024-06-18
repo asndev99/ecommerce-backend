@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ZodSchema, ZodError } from "zod";
 import * as responseHandler from "../helpers/responseHandler";
 import { responseCode } from "../helpers/responseCode";
-import { validationError } from "../helpers/types";
+import { validationError } from "../types/commonTypes";
 
 const formatZodErrors = (zodError: ZodError): validationError[] => {
   const formattedErrors = zodError.issues.map((issue: any) => {

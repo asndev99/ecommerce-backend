@@ -1,7 +1,7 @@
 import { responseMessages } from "./responseMessage";
 import { responseCode } from "./responseCode";
 import { Response } from "express"; // Assuming you're using Express
-import { validationError } from "./types";
+import { validationError } from "../types/commonTypes";
 
 export const handleError = (res: Response, err: any) => {
   let errorMessage = err.message || responseMessages.INTERNAL_SERVER_ERROR;

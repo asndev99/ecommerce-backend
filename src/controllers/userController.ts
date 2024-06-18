@@ -36,4 +36,13 @@ export class UserController {
       responseHandler.handleError(res, error);
     }
   }
+
+  whoAmI = async (req: Request, res: Response) => {
+    responseHandler.responseWithData(
+      res,
+      req.user,
+      "who am I",
+      responseCode.OK
+    );
+  };
 }
