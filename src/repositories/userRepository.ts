@@ -1,4 +1,4 @@
-import { PrismaClient, User } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import { IUserRepository } from "./IUserRepository";
 
 const prisma = new PrismaClient();
@@ -16,11 +16,15 @@ export class UserRepository implements IUserRepository {
     });
   }
 
-  async findOneWithEmail(email: string): Promise<User | null> {
+  async findOneWithEmail(
+    email: string,
+    select: Prisma.UserSelect
+  ): Promise<User | null> {
     return prisma.user.findFirst({
       where: {
         email,
       },
+      select,
     });
   }
 }

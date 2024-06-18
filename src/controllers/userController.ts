@@ -5,9 +5,9 @@ import { UserService } from "../services/userService";
 export class UserController {
   private userService: UserService = new UserService();
 
-  async createUser(req: Request, res: Response, next: NextFunction) {
+  async userSignup(req: Request, res: Response, next: NextFunction) {
     try {
-      const user = await this.userService.createUser(req);
+      const user = await this.userService.userSignup(req);
       return responseHandler.responseWithData(
         res,
         user,
@@ -18,8 +18,14 @@ export class UserController {
     }
   }
 
-  async userSignup(req: Request, res: Response, next: NextFunction) {
+  async userSignIn(req: Request, res: Response, next: NextFunction) {
     try {
+      const user = await this.userService.userSignIn(req);
+      return responseHandler.responseWithData(
+        res,
+        user,
+        "logged in successfully"
+      );
     } catch (error) {
       responseHandler.handleError(res, error);
     }

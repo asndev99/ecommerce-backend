@@ -12,9 +12,11 @@ export class UserService {
     this.userRepository = new UserRepository();
   }
 
-  async createUser(req: Request): Promise<User> {
+  async userSignup(req: Request): Promise<User> {
     const { email, name, password } = req.body;
-    const existingUser = await this.userRepository.findOneWithEmail(email);
+    const existingUser = await this.userRepository.findOneWithEmail(email, {
+      email: true,
+    });
     if (existingUser) {
       throw new ConflictError("User With this email already exists");
     }
@@ -27,14 +29,20 @@ export class UserService {
     return user;
   }
 
-  async userSignup(req: Request) {
+  async userSignIn(req: Request) {
     const { email, password } = req.body;
-    const user = await this.userRepository.findOneWithEmail(email);
+    const user = await this.userRepository.findOneWithEmail(email, {
+      name: true,
+      email: true,
+      id: true,
+      password: true,
+    });
     if (isNil(user)) {
       throw new UnauthorizedError("Incorrect email or password");
     }
     if (user?.password && !comparePassword(password, user.password)) {
       throw new UnauthorizedError("Incorrect email or password");
     }
+    return user;
   }
 }
